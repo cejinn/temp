@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JS012 - 우편번호</title>
+    <link  rel="stylesheet"  type="text/css"  href="css/reset.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/base.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/style.css"  /> 
+</head>
+<body>
+    <div class="basic">
+        <h3>객체 (3) 우편번호 </h3>
+        <pre>
+            1. https://postcode.map.daum.net/guide (다음 : 우편번호검색)
+            2. 
+        </pre>
+        <form action="#" method="post" id="addressform">
+            <fieldset>
+                <legend class="myhidden">주소 입력</legend>
+                <div class="postcode post1">
+                    <label for="post1">우편번호</label>
+                    <input type="text" id="post1" name="post1">
+                    <input type="button" value="우편번호검색" title="우편번호검색" id="postcode">
+                </div>
+                <div class="postcode post1">
+                    <label for="useraddress">상세주소</label>
+                    <input type="text" id="useraddress" name="useraddress">
+                    <input type="text" id="useraddress2" name="useraddress" title="상세주소2">
+                </div>
+            </fieldset>
+        </form>
+        
+        <div id="map1" style="width:100%;height:350px;"></div>
+        <p id="result1">확인용</p>
+
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+            window.addEventListener("load", function(){
+                //변수
+                let postbtn = document.getElementById("postcode");
+                let post1 = document.querySelector('#post1');
+                let useraddress =document.querySelector('#useraddress');
+                let useraddress2 = document.querySelector('#useraddress2');
+
+                //처리
+                postbtn.addEventListener("click", function(){
+                    //2. 우편번호 검색
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                            // 우편번호 : zonecode
+                            // 주소 : address
+                            post1.value = data.zonecode;
+                            useraddress.value = data.address;
+                            useraddress2.focus();
+                        }
+                    }).open();  //팝업창 띄우기
+                });
+
+            });
+        </script>
+        <div id="map1" style="width:100%;height:350px;"></div>
+
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a22b46c6f22ff4d6d3529fb5c6d8e410"></script>
+        <script>
+        var mapContainer = document.getElementById('map1'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng( 37.513131, 127.0582827), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map1 = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 마커가 표시될 위치입니다 
+        var markerPosition  = new kakao.maps.LatLng( 37.513131, 127.0582827); 
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map1);
+
+        var iwContent = '<div style="padding:5px;">코엑스 아쿠아리움 <br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            iwPosition = new kakao.maps.LatLng( 37.513131, 127.0582827); //인포윈도우 표시 위치입니다
+
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            position : iwPosition, 
+            content : iwContent 
+        });
+        
+        // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+        infowindow.open(map1, marker); 
+        </script>
+    </div>
+
+    </div>
+    <div class="basic">
+        <h3>기능 확인</h3>
+        <pre>
+            지도 위치 변경시 좌표 정보 받아옴
+        </pre>
+
+        <div id="map" style="width:100%;height:350px;"></div>
+        <p><em>지도 중심좌표가 변경되면 지도 정보가 표출됩니다</em></p>
+        <p id="result"></p>
+
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a22b46c6f22ff4d6d3529fb5c6d8e410"></script>
+        <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = { 
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        // 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+        kakao.maps.event.addListener(map, 'center_changed', function() {
+
+            // 지도의  레벨을 얻어옵니다
+            var level = map.getLevel();
+
+            // 지도의 중심좌표를 얻어옵니다 
+            var latlng = map.getCenter(); 
+
+            var message = '<p>지도 레벨은 ' + level + ' 이고</p>';
+            message += '<p>중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
+
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = message;
+
+        });
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Movie</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/basic.css">
+</head>
+
+<body>
+    <div class="basic movie">
+        <h3 class="myhidden">Ex 영화관</h3>
+        <p id="screen">SCREEN</p>
+        <table summary = "영화관 좌석선택">
+            <caption class="myhidden">영화관 좌석선택</caption>
+            <colgroup>
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+                <col style="width:10%">
+            </colgroup>
+            <tbody id="seatTbody">
+                <tr></tr>
+            </tbody>
+
+                <!-- tbody  # -->
+            </table>
+            <p class="movie_info">
+                <img src="images/movie_image.jpg" alt="인터스텔라 포스터">
+            </p>
+            <p id="clear"></p>
+<!--  -->
+<!--  -->
+<!--  -->
+            <!-- java script 파일 분리 언제 함? -->
+            <script>
+                window.addEventListener("load", function(){
+                    //1. 어려웠어
+                    let tr = document.querySelector("#seatTbody tr");
+                    let tds = '';
+                    
+                    for(let i=0; i<10; i++) {
+                        tds += '<td>A' + (i+1) + '</td>';
+                        tr.innerHTML = tds;
+                    }
+
+                    //2. 했어!
+                    let state = Array(10).fill(true);  
+ 
+                    //3-2
+                    let seats = document.querySelectorAll("#seatTbody tr td");
+                    for(let i=0; i<seats.length; i++) {
+                        console.log(seats[i]);
+                        seats[i].onclick = function() { 
+                            select(i); 
+
+                        }
+                    } 
+
+                    //3-1
+                function select(targetId) {
+                    let seats = document.querySelectorAll("#seatTbody tr td");
+                    let target = seats[targetId];
+
+                    let ans_res = '좌석 선택이 불가';
+                    let ans=' ';
+
+                    if(state[targetId]) { 
+                        while(!(ans == 'y' || ans=='Y' || ans == 'N' || ans=='n')) {
+                            ans = prompt('이 좌석 선택?', 'y, Y, n, N');
+                        }
+                        if(ans == 'y' || ans=='Y') {
+                            alert(target.innerHTML + "좌석 선택");
+                            state[targetId]=false;
+                            target.style.backgroundColor="orange";
+                            target.style.color="white";
+                            return;  //여기서 끝내기
+                        }
+                        else{
+                            alert(target.innerHTML + "좌석 취소");
+                            return;
+                        }
+
+                    }
+                    alert(ans_res);  //좌석 선택 불가
+
+                    }
+                
+            });
+
+            </script>
+        </div>
+</body>
+</html>

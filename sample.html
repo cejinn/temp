@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Booth</title>
+    <meta name="description" content="부스" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/base.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/myjs.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.gnb {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.gnb > li > a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.gnb > li > a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.gnb > li > a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.gnb > li > .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .gnb > li:nth-child(2),
+  .gnb > li:nth-child(3),
+  .gnb > li:nth-child(4) {display: none;}
+  .gnb > li > a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .gnb.responsive {position: relative;}
+  .gnb.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .gnb.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+</style>
+</head>
+<body>
+    <script>
+        function myFunction() {
+          var x = document.getElementById("myTopnav");
+          if (x.className === "gnb") {
+            x.className += "responsive";
+          } else {
+            x.className = "gnb";
+          }
+        }
+        </script>
+
+    <header id="header">
+        <h1 class="myhidden">Booth</h1>
+        <nav>
+            <h2 class="myhidden">주메뉴</h2>
+            <ul class="gnb" id="myTopnav">
+                <li><a href="#home" class="active">Home</a>=</li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+                <li> <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                     <i class="fa fa-bars"></i></a>
+                </li>
+            </ul>
+
+
+        </nav>
+    </header>
+
+</div>
+
+<div style="padding-left:16px">
+  <h2>Responsive Topnav Example</h2>
+  <p>Resize the browser window to see how it works.</p>
+</div>
+
+
+
+</body>
+</html>

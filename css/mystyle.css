@@ -1,0 +1,226 @@
+@charset "UTF-8";
+
+/* header */
+#header {
+    width: 100%;  height: 80px;
+    margin: 0 auto;
+    position: relative;
+    /* position: fixed; */
+    /* top: 0;
+    left: 0;
+    z-index: 999; */
+    background: #fff;
+    overflow: hidden;
+}
+
+#header h1, #header .gnb, #header .lnb {
+    position: absolute;
+}
+
+/* 위치 결정 */
+#header h1 {
+    left: 80px;
+    top: 20px;
+}
+
+#header .gnb {
+    height: 100%;
+    left: 620px;
+    top: 20px;
+}
+
+#header .lnb {
+    right: 80px;
+    top: 20px;
+    background-color: #fff;
+}
+
+/* 가로 정렬 */
+#header .gnb > li,
+#header .lnb > li {
+    float: left;
+}
+
+#header .lnb > li {
+    float: right;
+}
+
+#header .gnb > li > a,
+#header .lnb > li > a {
+    display: block;
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: #fff;
+    border-bottom: 3px solid #fff;
+}
+
+#header .gnb > li:not(:last-child) > a {
+    padding-bottom: 50px;
+    background: none;
+    border: none;
+}
+
+/* 링크 글씨색, 영역 확대 */
+#header .gnb > li:not(:last-child) > a,
+#header .lnb > li:not(:first-child) > a {
+    margin-right: 10px;
+}
+
+/* 로그인 링크 글씨색, 영역 확대 */
+#header .lnb > li:nth-child(1) > a {
+    background-color: plum;
+    border-radius: 10px;
+    color:white;
+}
+
+/* 마우스 올렸을 때 효과 */
+#header .gnb > li:last-child:hover > a,
+#header .gnb > li:last-child:focus > a {
+    border-bottom: 3px solid plum;
+}
+
+/* 서브메뉴 */
+#header .gnb .dp2 {
+    position: absolute;
+    width: 150px;
+    text-align: left;
+    padding: 10px 0;
+    background-color: #fff;
+    z-index: 1200;
+    margin-top: -40px;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
+}
+
+#header .gnb .dp2 li {
+    padding: 6px 0;
+    padding-left: 10px;
+}
+
+/* 링크 글씨색, 영역 확대 */
+#header .gnb .dp2 li a {
+    display: block;
+    color: #666;
+}
+
+/* | 만들기 */
+#header .lnb > li:last-child > a:before {
+    content: "";
+    padding-right: 33px;
+    color: #ddd;
+    border-left: 1.5px solid #ddd;
+}
+
+
+/* footer */
+#footer {
+    width: 100%;  height: 400px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #343434;
+}
+
+#footer .row {
+    position: absolute;
+    width: 980px;
+}
+
+#footer .row.r1 {
+    padding-top: 60px;
+
+}
+
+#footer {
+    width: 100%;  height: 400px;
+    margin: 0 auto;
+    background-color: #343434;
+}
+
+#footer .row {
+    width: 980px;
+
+}
+
+#footer .row.r1 {
+    position: relative;
+    margin: 0 auto;
+    height: 220px;
+}
+
+#footer .sitemap {
+    position: absolute;
+    float: left;
+}
+
+#footer .sitemap > li > a {
+   display: block;
+}
+
+
+
+#footer .row.r2 {
+    position: relative;
+    margin: 0 auto;
+    height: 80px;
+    border-top: 1px solid #888;
+}
+
+#footer .sitemap,
+#footer .copyright {
+    position: absolute;
+}
+
+/* 위치결정 */
+#footer .sitemap {
+    margin-right: 20px;
+    width: 150px;
+}
+
+#footer .sitemap.s1 {
+    left: 100px;
+    top: 60px;
+}
+
+#footer .sitemap.s2 {
+    left: 300px;
+    top: 60px;
+}
+
+#footer .sitemap.s3 {
+    left: 500px;
+    top: 60px;
+}
+
+#footer .sitemap.s4 {
+    right: 100px;
+    top: 60px;
+}
+
+#footer .sitemap_title {
+    font-weight: 500;
+    font-size: 18px;
+    color : #888;
+    margin-bottom: 10px;
+}
+
+#footer .sitemap_list > li {
+    color: #888;
+    margin: 5px 0;
+}
+
+#footer .sitemap_list > li > a {
+    color: white;
+}
+
+#footer .sitemap_list > li > a:hover,
+#footer .sitemap_list > li > a:focus {
+    text-decoration: underline;
+}
+
+#footer .copyright {
+    padding-top: 20px;
+    padding-left: 20px;
+    color : #888;
+
+}

@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html  lang="ko">
+ <head>
+  <meta   charset="utf-8">
+  <title> JS019-정규식</title>
+  <link rel="stylesheet" type="text/css" href="css/js019.css" />
+
+  	
+	<!-- //처리7 우편번호
+	//주소에 우편번호검색이 가능하게 만들기 (다음우편번호)  - check -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
+  <script>
+	
+	window.addEventListener('load', function(){
+		let form = document.getElementById('joinform');
+			//1. target 대상 찾아오기
+			let datavalue = ["아이디", "비밀번호", "비밀번호확인", "이메일", "모바일", "우편번호", "상세주소1", "상세주소2"];
+			let inputText = document.querySelectorAll('#joinform input[type=text]');
+			let inputPassword = document.querySelectorAll('#joinform input[type=password]');
+			let inputRadio = document.querySelectorAll('#joinform input[type=radio]');
+			let inputCheckbox = document.querySelectorAll('#joinform input[type=checkbox]');
+			let inputSelect = document.querySelector('#joinform select');  //## All 인지 확인!
+
+			let id_list = ['aaa', 'bbb', 'ccc'];  //id 중복 검사
+
+			let postbtn = document.getElementById("postcode");
+
+
+			//1-2. 1단계) 배열에 push 이용해서 inputText 데이터 넣기 - console.log로 확인
+			// 2단계) 배열.splice(넣을위치, 0(기존의 데이터 안 지움), 넣을대상);
+			// 3단계) splice 이용해서 배열에 대상 넣기
+			let inputs = new Array();
+
+			//배열에 데이터 입력
+			//for로 inputText입력
+			for(let i=0; i<inputText.length; i++) {
+				inputs.push(inputText[i]);
+			}
+
+			//배열 1번과 2번 자리에 추가
+			inputs.splice(1, 0, inputPassword[0]);
+			inputs.splice(2, 0, inputPassword[1]);
+
+			//기본 설정
+			inputRadio[0].checked = true;
+
+
+		// 제출 버튼 누르면?
+		form.onsubmit = function(){
+			//유효성 검사를 위해서
+			let id_check =  /.*(?=[A-Z]).*(?=[0-9]).*(?=[^\w\s]){8,}/;
+			let pass_check = /.*(?=[A-Z]).*(?=[0-9]).*(?=[^\w\s]){8,15}/;
+			let mobile_check = /^010(?:\d{3}|\d{4})\d{4}$/;
+			let email_check = /^[0-9a-zA-Z]+(.[_a-z0-9-]+)*@(?:\w+\.)+\w+$/;
+
+			for(let i=0; i<inputs.length; i++) {
+				// 처리1 빈칸검사
+				if(inputs[i].value == '') { 
+					alert(datavalue[i] + " 칸이 빈칸입니다. 확인해주세요"); 
+					if(i==5){ postbtn.click();  return false; }
+					inputs[i].focus();  //##
+					return false;   //##
+				}
+
+				switch(i) {
+					case 0: //처리2 아이디
+					if (!id_check.test(inputs[0].value)) {
+						alert("아이디는 최소한 8자, 대문자1이상 +숫자 1이상 + 특수문자 1이상입니다"); 
+						return false;
+					} break;
+
+					case 1: //처리3 비밀번호
+					if (!pass_check.test(inputs[1].value)) {
+						alert("비밀번호는 8 ~ 15자, 대문자1이상 +숫자 1이상 + 특수문자  1이상"); 
+						inputs[1].value == null;
+						return false;
+					} break;
+					 
+					case 2: //처리4 비밀번호, 비밀번호 확인
+					if(inputs[1].value != inputs[2].value) {
+						alert("비밀번호와 비밀번호 확인이 다릅니다"); 
+						inputs[2].value == null;
+						inputs[1].focus(); 
+						return false;
+					} break;
+					
+					case 3: //처리6 이메일
+					if(!email_check.test(inputs[3].value)) {
+						alert("이메일을 확인해주세요"); 
+						inputs[3].focus(); 
+						return false;
+					} break;
+					
+					case 4: //처리5 모바일
+					if(!mobile_check.test(inputs[4].value)) {
+						alert("전화번호가 아닙니다 (-를 제외하고 입력해주세요)"); 
+						inputs[4].focus(); 
+						return false;
+					} break;
+				}
+			}
+
+			// 처리+ 수신정보
+			if(inputRadio[0].checked == false && inputRadio[1].checked==false) {
+				alert("수신정보는 한 개 이상 체크햐셔야 합니다.");
+				return false;
+			}
+			
+			//처리8 관심분야
+			let checkbox_cnt = 0;
+			for(let i=0; i<inputCheckbox.length; i++) {
+				if(inputCheckbox[i].checked == false) {checkbox_cnt++;}
+
+			}
+
+			if(checkbox_cnt == inputCheckbox.length) {
+				alert("관심분야 한 개 이상은 체크하셔야 합니다");
+				return false;
+			}
+	
+
+			//처리9 직업 선택
+			//inputSelect.value.indexOf('defalut') > -1
+			if(inputSelect.value == 'default') {
+				alert('직업을 선택해주세요');
+				inputSelect.focus();
+				return false;
+			}
+
+			//2. 유효성 검사 규칙
+			return false;   //test를 위해 잠그기
+
+	
+		}
+
+	///////////////////////////////////////////////////
+	postbtn.addEventListener('click' , function(){
+		alert("우편번호 검색을 시작합니다!");
+		new daum.Postcode({
+			oncomplete: function(data) {
+				inputs[5].value = data.zonecode;
+				inputs[6].value = data.address;
+				inputs[7].focus();
+			}
+		}).open();
+	});
+		
+	});
+	</script>
+
+
+ </head>
+ <body>
+	<div class="basic">
+			<h3>JOIN</h3>
+			<div class="subcontent  subtop">
+				<h1  class="hidden">회원가입</h1>
+				<p> <strong class="required">(*)</strong>은 필수입력사항입니다. </p>
+				<form  action="#"  method="post"   id="joinform">
+					<fieldset  class="joinfield jf1">
+					<legend >필수 입력 정보</legend>
+						<p>
+							<label for="userid"><strong class="required">(*)</strong>아이디</label> 
+							<input type="text" name="userid" id="userid"  ><input type="button" value="중복확인" id="idckeck"/><span>(아이디는 영문, 숫자 4~15자리)</span>
+						</p>
+						<p>
+							<label for="userpass"><strong class="required">(*)</strong> 비밀번호 </label> 
+							<input type="password" name="userpass" id="userpass"       >
+							<span>(영문, 숫자 조합 10~20자리)</span>
+						</p>
+						<p>
+							<label for="userpassre"><strong class="required">(*)</strong> 비밀번호 확인</label> 
+							<input type="password" name="userpassre" id="userpassre"       >
+						</p>
+						<p><!-- select -->
+							<label for="useremail"><strong class="required">(*)</strong> 이메일</label> 
+							<input type="text" name="useremail" id="useremail"       >
+						</p>
+						<p><!-- select -->
+							<label for="userphone"><strong class="required">(*)</strong>모바일</label>
+							<input type="text" id="userphone" name="userphone">
+						</p>
+						<p><label for="post1">우편번호</label>
+							<input type="text" id="post1" name="post1">
+							<input type="button" value="우편번호검색" id="postcode">
+						</p>
+						<p  class="br_bottom">
+							<label for="useraddress">상세주소</label>
+							<input type="text" id="useraddress" name="useraddress"><input type="text" id="useraddress2" name="useraddress2">
+						</p>
+					</fieldset> <!-- 필수 입력 정보  -->
+					<fieldset   class="joinfield jf2">
+					<legend > 수신 정보 동의</legend>
+						<p   class="br_bottom">
+							<strong  class="addinfo_title">SMS 수신여부</strong>
+							<span    class="addinfo_desc">SMS 수신에 동의하시겠습니까?</span>
+							<input type="radio"  id="yes2"  name="smsaccept" value="yes2" />
+							<label for="yes2">예</label>
+							<input type="radio"  id="no2"  name="smsaccept"  value="no2"/>
+							<label for="no2">아니요</label>
+						</p>
+					</fieldset> <!-- 수신 정보 동의  -->
+					<fieldset   class="joinfield jf3">
+					<legend >추가 정보</legend>
+						<p class="addinfocheckbox"> 
+							<strong  class="addinfo_title"> 관심분야</strong>
+							<input type="checkbox" id="java" name="java">
+							<label for="java" class="display_w">JAVA</label> 
+							
+							<input type="checkbox" id="spring" name="spring">
+							<label for="spring" class="display_w">SPRING</label>
+
+							<input type="checkbox" id="mysql" name="mysql">
+							<label for="mysql" class="display_w">MYSQL</label>
+
+							<input type="checkbox" id="aws" name="aws">
+							<label for="aws" class="display_w">AWS</label>
+						</p>
+						<p   class="br_bottom"> 
+							<label for="userjob"  class="addinfo_title">직업</label>
+							<select id="userjob" name="userjob">
+								<option value="default">--- 선택 ---</option>
+								<option value="devel1">자바연구원</option>
+								<option value="devel2">SPRING WEB</option>
+							</select>
+						</p>
+						<ul>
+							<li><input type="button" value="이전" /></li>
+							<li><input type="submit" value="확인" /></li>
+						</ul>
+					</fieldset> <!-- 추가 정보  -->
+				</form>
+			</div>
+	</div> <!--  submain END  -->
+ </body>
+</html>
+

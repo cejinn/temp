@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link  rel="stylesheet"  type="text/css"  href="css/reset.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/base.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/style.css"  /> 
+    
+</head>
+<body>
+    <div class="basic"> 
+        <h4>EX5 - OBJECT</h4> 
+        <pre>
+        Q1. Avengers 생성자만들기
+            no , name, img, show 속성 으로 가짐 
+            * no, name은 사용자에게 입력받기
+            * img는  해당 no의 번호로 처리  ->  no가 1이라면 a1.jpg
+        Q2. let iron = new Avengers(1, 'iron');    
+            이미지에 마우스를 올리면 해당 이미지 보여주기 a1.jpg
+        Q3. new Avengers(1, 'iron') , new Avengers(2, 'hulk') , new Avengers(3, 'captain') 
+           데이터 이용    
+        </pre>  
+        <table  id="avengers_table">  
+            <caption>2023 학생명단</caption> 
+            <colgroup>
+                <col style="width:10%">
+                <col style="width:30%">
+                <col style="width:60%">
+            </colgroup>
+            <thead>
+                <tr><th scope="col">NO</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">IMG</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>team1</td><td><img src="images/a5.jpg" alt=""></td></tr>
+                <tr><td>2</td><td>team2</td><td><img src="images/a5.jpg" alt=""></td></tr>
+                <tr><td>3</td><td>team3</td><td><img src="images/a5.jpg" alt=""></td></tr> 
+            </tbody>
+        </table>
+        <script>
+            //1번 생성자
+            function Avengers(no, name) {
+                this.no = no;
+                this.name = name;
+                this.img = "images/a"+this.no+".jpg";
+                this.show = function() {
+                };
+            }
+            /* 1번
+            function Avengers(no, name) {
+                this.no = no;
+                this.name=name;
+                this.img = 'a' + this.no + '.jpg';
+                this.show=function(){};
+            }
+            */
+
+            //2번, 3번
+            window.addEventListener("load", function(){
+                let teams = [new Avengers(1, 'iron') , new Avengers(2, 'hulk') , new Avengers(3, 'captain')];   
+                let trs = document.querySelectorAll("#avengers_table tbody tr");
+
+                for(let i=0; i<teams.length; i++) {
+                    let tds0 = trs[i].querySelectorAll('td');
+
+                    tds0[0].innerHTML = teams[i].no;
+                    tds0[1].innerHTML = teams[i].name;
+
+                    tds0[2].addEventListener("mouseover", function(){
+                        let img = tds0[2].querySelector('img');
+                        img.setAttribute('src', teams[i].img);
+                    });
+
+                    tds0[2].addEventListener("mouseout", function(){
+                        let img = tds0[2].querySelector('img');
+                        img.setAttribute('src', "images/a5.jpg");
+                    });
+
+                }
+
+            });
+
+        </script>
+    </div>
+
+
+
+
+</body>
+</html>

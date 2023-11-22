@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Day031 번외 - 남은 시간?</title>
+    <link  rel="stylesheet"  type="text/css"  href="css/reset.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/base.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/style.css"  /> 
+</head>
+<body>
+    <div class="basic">
+        <h3>남은 시간</h3>
+        <pre>
+            1초 = 1000 * 1
+            1분 = 1000 * 1 * 60
+            1시 = 1000 * 1 * 60 * 60
+            1일 = 1000 * 1 * 60 * 60 * 24
+        </pre>
+        <div>
+            <h5>현재 시간</h5>
+            <p class="today_show">년 월 일 시 분 초</p>
+            <h5>day 시간</h5>
+            <p class="dday_show">년 월 일 시 분 초</p>
+            <h5>남은 시간?</h5>
+            <p class="show">년 월 일 시 분 초</p>
+        </div>
+        <input type="button" value ='남은 시간 확인' id="btn">
+        <script>
+            //변수?
+            window.addEventListener('load', function(){
+                let btn = document.querySelector('#btn');
+                let today_show = document.querySelector('.today_show');
+
+
+                //현재 시간
+                let today = new Date();
+                let result_today = '';
+
+                //시간 처리
+                result_today += today.getFullYear() + '년 ';
+                result_today += (today.getMonth()+1) + '월 ';  //월은 주의!
+                result_today += today.getDate() + '일 ';
+                result_today += today.getHours() + '시 ';
+                result_today += today.getMinutes() + '분 ';
+                result_today += today.getSeconds() + '초';
+
+
+                btn.addEventListener('click', function(){
+                    setInterval(function(){ dday_check(); }, 1000);
+                });
+            });
+            function dday_check() {
+                let show = document.querySelector('.show');
+
+                const dday = new Date("2023-10-21"); //dday
+                let today = new Date(); //현재
+                let total_sec = 0;
+                let day=0, hr=0, min=0, sec=0;
+
+                //처리: 남은 시간 초로 계산
+                total_sec = (dday.getTime()-today.getTime() )/1000;  //
+                console.log('남은 초 : ' + total_sec);
+
+                day = Math.floor( total_sec/(60*60*24) );
+                hr = Math.floor( total_sec%(60*60*24)/(60*60) );
+                min = Math.floor( total_sec%(60*60*24)%(60*60)/60 );
+                sec = Math.floor( total_sec%(60*60*24)%(60*60)%60 );
+
+                let result = day + '일 ' + hr + '시 ' + min + '분 ' + sec + '초';
+                //'남은 시간 : ' + 
+
+                show.innerHTML = result;
+            };
+        </script>
+    </div>
+</body>
+</html>

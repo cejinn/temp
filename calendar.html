@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JS014 - OBJECT</title>
+    <link  rel="stylesheet"  type="text/css"  href="css/reset.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/base.css"  />
+    <link  rel="stylesheet"  type="text/css"  href="css/style.css"  /> 
+</head>
+<body>
+    <div class="basic">
+        <h3>객체2</h3>
+        <h4>STEP1 - 내장객체(Date)</h4>
+        <pre>
+            https://www.w3schools.com/js/js_dates.asp
+            객체는 생성자부터 확인
+
+            https://www.w3schools.com/jsref/jsref_obj_date.asp
+            사용가능한 속성
+
+            let today = new Date();
+            * getFullYear()
+            * Deprecated 웬만하면 선택하지 말 것!
+            * getMonth() - 0~11 * January = 0, February = 1
+              getDate()
+              getHours()  getMinutes()  getSeconds()
+        </pre>
+        <script>
+            //1. 생성자
+            let today = new Date();
+            console.log('Date() : ' + today);  //Tue Oct 17 2023 09:49:46 GMT+0900 (한국 표준시)
+
+            //2. 간단한 사용
+            let todayResult = '';
+            // todayResult = today.getYear();
+            // console.log('예전 버전() : ' + todayResult); // Deprecated : 더 이상 사용되지 않음
+
+            todayResult += today.getFullYear() + '년 ';
+            todayResult += (today.getMonth()+1) + '월 ';  //월은 주의!
+            todayResult += today.getDate() + '일 ';
+            todayResult += today.getHours() + '시 ';
+            todayResult += today.getMinutes() + '분 ';
+            todayResult += today.getSeconds() + '초';
+            //2023년 9월 17일 9시 56분 33초
+
+            document.write(todayResult);
+
+            // 3. millisecond 뽑기
+            // let todayMillli = new Date(milliseconds);
+
+            // console.log(todayMillli);
+        </script>
+    </div>
+
+    <div class="basic">
+        <h4>MISSION-1</h4>
+        <pre>
+            MISSION-1
+                time1 버튼을 클릭하면 
+                1. 현재 날짜를 나타내는 객체만들기
+                2. 현재 시간구하기 getHours() 
+                3. 만약 시간이 12시가 넘는다면  오후붙이기 =>예) 18시면 오후6시
+                            12시가 안 넘는다면 오전붙이기 => 예) 오전 7시
+                4. .r1에 결과물 나오게 만들기           
+
+                * innerHTML
+                1) 대입 : 대상.innerHTML = 값;
+                2) 검색 : 대상.innerHTMl;
+            </pre>
+            <input type="button" class="btn time1" value="NOW" title="">
+            <div class="result r1"></div>
+            <script>
+                window.addEventListener("load", function(){
+                var time1 = document.querySelector(".time1");
+                var r1 = document.querySelector(".r1");
+
+                //2. 이벤트 처리
+                time1.addEventListener("click", function(){
+                    //변수
+                    let today = new Date();
+                    let hour = today.getHours();
+                    let result = '';
+
+                    //처리
+                    result = (hour>12? '오후 '+(hour-12) : '오전 '+hour) + '시';
+                    r1.innerHTML = result;
+
+                    //출력
+                    console.log(r1.innerHTML);
+                });
+            });
+            </script>
+    </div>
+
+    <div class="basic">
+        <h4>Q2</h4>
+
+        <pre>
+            MISSION-2
+            time2 버튼을 클릭하면 
+            1. *시 *분 *초 출력되는 함수(function, method)로 만들기  
+                time2()
+            2. 1초마다 시간이 타이틀바 (document.title)에 나타나게 만들기
+            3. hint)  setInterval 함수 찾아보기  => 몇초마다 뭐해주세요
+
+            setInterval()
+            https://www.w3schools.com/jsref/met_win_setinterval.asp
+            // setInterval(function() {alert('hello');}, 몇 초 마다);
+            // 3초마다 경고창 띄워주세요 (3000)
+
+            setTimeout()
+            https://www.w3schools.com/jsref/met_win_settimeout.asp
+            // setTimeout(function() {alert('hello');}, 몇 초 뒤에);
+            // 1번만 실행
+        </pre>  
+        <input type="button" class="btn time2" value="NOW-TITLE" title="">
+        <script>
+            /*
+            이벤트 대상 : time2
+            이벤트 : 클릭하면
+            이벤트핸들러:
+            1. 시 분 초 출력되는 함수로 만들기 time2()
+            2. 1초마다 시간이 타이틀바(document.title)에 나타나게 만들기
+            */
+            window.addEventListener("load", function(){
+                var btn = document.querySelector('.time2');
+
+                btn.addEventListener("click", function(){
+                    // setInterval(function(){document.title = time2(); }, 1000);
+                    setInterval(function(){time22(); }, 1000);
+
+                });
+            });
+
+            function time2() {
+                //변수
+                let today = new Date();
+                let hour = today.getHours();
+                let min = today.getMinutes();
+                let sec = today.getSeconds();
+                let result = '';
+
+                //입력
+                //처리
+                result = hour + '시 ' + min + '분 ' + sec + '초 ';
+
+                //출력
+                return result;
+            }
+
+            function time22() {
+                //변수
+                let today = new Date();
+                let result = today.getHours() + '시 ' + today.getMinutes() + '분 ' + today.getSeconds() + '초';
+
+                //입력
+                //처리
+                document.title=result;
+            }
+        </script>
+    </div>
+
+    <div class="basic">
+        <h4>Q3</h4>
+        <pre>
+            MISSION-3
+            1. Date.prototype에 속성을 추가하여 다음과 같이 결과가 나오게 만드시오.
+            2. mycalc1 버튼을 클릭하면 해당 달을 출력해준다.
+            3. mycalc2 버튼을 클릭하면 년, 월, 일을 출력해준다.
+
+            function myFunction() {
+                var d = new Date();
+                d.myMon();
+                document.querySelector('.r3').innerHTML = d.myProp;
+            }
+            function dateShort() {
+                var d = new Date();
+                document.querySelector('.r3').innerHTML = d.shortDateFormat();
+            }
+        </pre>  
+        <input type="button" value="MY CALENDAR" id="mycalc1" 
+        title="MYCALENDAR1 검색버튼입니다.">
+        
+        <input type="button" value="MY CALENDAR" id="mycalc2" 
+        title="MYCALENDAR2 검색버튼입니다.">
+        <div class="r3">hi</div>
+        <script>
+            window.addEventListener('load', function(){
+                //변수
+                let mycalc1 = document.querySelector("#mycalc1");
+                let mycalc2 = document.querySelector("#mycalc2");
+
+                //1. 프로토타입 추가
+                Date.prototype.myMon = function(){ 
+                    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+                    this.myProp = month[this.getMonth()];  //0~11
+                    //## this.myProp으로 보내기!
+                    // Date.prototype.myProp = d.myMon();
+                };
+
+                Date.prototype.shortDateFormat = function(){ 
+                    return this.getFullYear()+'년 ' + (this.getMonth()+1) + '월 ' + this.getDate() + '일'
+                };
+
+                //2. 이벤트 처리 (버튼 누르면 반응!)
+                mycalc1.addEventListener('click', function(){
+                    myFunction();
+                });
+
+                mycalc2.addEventListener('click', function(){
+                    dateShort();
+                });
+
+                //3. 안에 들어있는 함수들 (주어진 조건)
+                function myFunction() {
+                    var d = new Date();
+                    d.myMon();
+                    document.querySelector('.r3').innerHTML = d.myProp;
+                }
+
+                function dateShort() {
+                    var d = new Date();
+                    document.querySelector('.r3').innerHTML = d.shortDateFormat();
+                }
+            });
+        </script>
+    </div>
+
+    <div class="basic">
+        <h4>Q4</h4>
+        <pre>
+            d-day 계산버튼 클릭
+            날짜 얼마 남았는지 알림창으로 
+            오늘부터 d-day 전달받은 날짜에 대한 d-day 계산
+        </pre>
+        <label for="dday">D-DAY</label>
+        <input type="date" id="dday" name="dday">
+        <input type="button" value="D-DAY계산" id="dday_check" title="D-DAY계산버튼입니다.">
+        <script>
+            window.addEventListener('load', function(){
+                //1. 선택자
+                let button = document.querySelector('#dday_check');
+                let dday = document.querySelector('#dday');
+                // console.log(button);
+                // console.log(dday.value);
+
+                //2. 이벤트 처리
+                button.addEventListener('click', function(){
+                    if(dday.value =='') {alert('빈칸!'); dday.focus(); return;}
+                    //## 안에 return 넣기
+                    else { 
+                        var today = new Date();
+                        var target = new Date(dday.value);
+                        // console.log(dday.value);  // 2023-10-25
+                        // console.log(typeof(dday.value));  //string
+
+                        const today_sec = Date.parse(today);
+                        // console.log(today_sec);
+                        const dday_sec = Date.parse(target);
+                        // console.log(dday_sec);
+
+                        // console.log(dday_sec-today_sec);
+                        let result = Math.ceil((dday_sec-today_sec) / 1000 / 60 / 60 / 24);
+                        // console.log(result + '일');
+                        alert(result + '일');
+
+                        // .getTime() : 바로 초단위 계산해줌
+                    }
+
+                });
+
+            });
+        </script>
+
+    </div>
+    
+    <div class="basic">
+        <h4>Q5</h4>
+        <pre>
+            이미지 랜덤
+            1. 배열에서 랜덤으로 보여줄 이미지를 지정 : a1.jpg ~ a5.jpg
+            2. .ex2에 2초마다 배경이 랜덤하게 보여줌
+            -> 대상과 효과 확인
+
+            * setInterval()
+            https://www.w3schools.com/jsref/met_win_setinterval.asp
+            // setInterval(function() {alert('hello');}, 몇 초 마다);
+            // 3초마다 경고창 띄워주세요 (3000)
+        </pre>
+        <div class="ex2" style="height:100px;">
+            
+        </div>
+        <script>
+            window.addEventListener('load', function(){
+                //1. 선택자
+                let box = document.querySelector('.ex2');
+                var arr = ['a1.jpg', 'a2.jpg','a3.jpg','a4.jpg','a5.jpg'];
+                // console.log(arr[0]);
+                // 배열 대신 메서드 버전 : push로 데이터 넣기
+
+                //* 초기화 (그냥 보기 좋으라고)
+                box.style.backgroundImage = "url('images/"+arr[0]+"')";
+                box.style.backgroundRepeat = 'no-repeat';
+                box.style.backgroundSize = '500px 100px';
+                //contain 세로 기준 , cover 가로 기준 꽉차게
+
+                // 이미지 태그 추가 버전 : box.innerHTML = "<p><img src='images/" + arr[0] + "'></img></p>";
+
+                //처리
+                setInterval(function() {
+                    let random =  Math.floor(Math.random() * arr.length);
+                    // box.innerHTML = "<p><img src='images/" + arr[random] + "'></img></p>";
+                    box.style.backgroundImage = "url('images/"+arr[random]+"')";
+                }, 2000);
+
+                /*
+                function bgchange(box, arr) {
+                    var arr = ['a1.jpg', 'a2.jpg','a3.jpg','a4.jpg','a5.jpg'];
+                    box.style.backgroundImage = "url('images/"+arr[Math.floor(Math.random()*arr.length)]+"')";
+                }
+                */
+            });
+        </script>
+    </div>
+
+
+    <div class="basic">
+        <h3>객체2</h3>
+        <h4>STEP2 - 내장객체(Math)</h4>
+        <pre>
+            Math
+            https://www.w3schools.com/jsref/jsref_obj_math.asp   
+            * 생성자가 없다!
+
+            절대값 Math.abs(x)
+            큰수 Math.max(x1, x2, ...)
+            작은수 Math.min(x1, x2, ...)
+            반올림 Math.round(x)
+            무조건올림 Math.ceil(x)
+            무조건내림 Math.floor(x)
+            난수 ((Math.random() * end) + start) //start부터 end까지 random
+            난수 0~0.9999999999999999....
+        </pre>
+        <script>
+            //Math mymath = new Math();
+            console.log('------Math 연습-------')
+            console.log(Math.PI);
+            console.log(Math.abs(-20));
+            console.log(Math.max(8, 10, 9));
+            console.log(Math.min(8, 9, 10));
+            console.log(Math.round(3.7));
+            console.log(Math.ceil(1.1));
+            console.log(Math.floor(1.9));
+            console.log(Math.floor(Math.random()*5));
+        </script>
+</body>
+</html>

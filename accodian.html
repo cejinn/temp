@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html   lang="ko">
+ <head> 
+  <meta charset="utf-8" />
+  <title> new document </title>
+  <style>
+	*{  margin:0; padding:0; }
+	li{  list-style-type:none; }
+
+	body{ font-family:"Malgun Gothic" , sans-serif;   }
+	.basic{ color:#333;  width:600px; margin:50px auto; background-color:#eee; border-top:5px solid  #123;  padding:50px;  }
+	h3{  margin:10px  0; }
+
+	.arrco{   width:348px;   height:417px; }  /* height :  dt  4개 +  dd  1개 높이  */
+	.arrco dt{   width:348px; height:68px; }
+	.arrco dt a{  display:block;  width:348px; height:65px; background-color:#333;
+		border-bottom:3px solid #06beb4;  line-height:65px; text-indent:1em; 
+		color:white;  text-decoration:none;   color:white;  font-size:18px; 
+	}
+	.arrco dd{   width:348px; height:145px;   background-color:white; }
+	.arrco dd p{   margin:5px;   font-size:13px;  width:50%;  float:left;   }
+	.arrco dd p.ddesc{   width:130px; height:90px;   border-radius:50%;
+		float:left;  text-align:center;   background-color:#555; 
+		padding-top:40px; 
+		margin-top:7.5px;  margin-left:10px;  margin-right:0; margin-bottom:0;
+		font-size:15px;  color:white; line-height:20px; 
+	}
+	.arrco dd p.ddesc  strong{  display:block;  width:100%;  font-size:150%;    margin-top:10px; } 
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <script>
+	$(function(){
+		// 1.      .arrco의 dd (내용콘텐츠)  안보이게 숨기기  ===>>>> 첫번째 콘텐츠만 보이게만들기
+		//  패턴 : 대상(".arrco  dd")			   효과( css("display","none")   )
+		// $(".arrco  dd").hide(); 도 가능
+
+		/* ver1
+		$(".arrco  dd").css("display","none");
+		$(".arrco  dd:first").css("display","block");
+		*/
+
+		// ver2
+		$(".arrco dd:not(:first)").css("display","none");
+
+		// 2.      제목을       클릭하면     해당하는 내용콘텐츠가 보인다.
+		//  패턴 : 이벤트대상(".arrco   dt")      
+		//  이벤트 :   click    
+		//  이벤트핸들러 : [ 내가누른 dt의  그 다음에오는 내용콘텐츠가] 보인다.    $(this).next() 
+		//					=>   효과( $(this).next().css("display","block")   )	
+		$(".arrco   dt").on('click',function(){
+			if( $(this).next().css("display")  == "none" ) {
+				$(".arrco  dd").stop(true, true).slideUp("fast");
+				$(this).next().stop(true, true).slideDown("fast");
+			}
+			
+			// $(".arrco  dd").css("display","none");
+			// $(this).next().css("display","block");
+		});
+	});
+  </script>
+ 
+ </head>
+ <body>
+   <div  class="basic">
+		<h3> ARRCODIAN</h3>
+		<dl  class="arrco">
+			<dt><a href="#">온라인 회원</a></dt>
+			<dd  class="first">
+				<div> 
+					<p  class="ddesc"> 회원가입 <strong>50%</strong></p>
+					<p> M멤버쉽 소식을 가장먼저!</p>
+					<p> 이벤트, 프로그램,e-뉴스레터 등 다양한 혜택제공</p>
+				</div>
+			</dd><!-- dd1 -->
+			<dt><a href="#"> M멤버쉽</a></dt>
+			<dd>
+				<div> 
+					<p  class="ddesc"> 특별한 혜택 <strong>50%</strong></p>
+					<p> 50% 이상 할인된 가격으로</p>
+					<p> 친절한상담 + 무료 a/s + 커피까지</p>
+				</div>
+			</dd><!-- dd2 -->
+			<dt><a href="#">모바일앱</a></dt>
+			<dd>
+				<div> 
+					<p   class="ddesc"> 내손안에 M멤버 <strong>FREE</strong></p>
+					<p> 앱 모바일 투어로 전시관람을 쉽게</p>
+					<p> 앱다운받고 전시 40%할인받기</p>
+				</div>
+			</dd><!-- dd3 -->
+			<dt><a href="#">EVENT</a></dt>
+			<dd>
+				<div> 
+					<p  class="ddesc">  다채로운 즐거움<strong>토요일</strong></p>
+					<p> 국내 최고의 규모로 진행하는 이벤트</p>
+					<p> 낭만가득한 토크, 콘서트, 강연!</p>
+				</div>
+			</dd><!-- dd4 -->
+		</dl>
+
+   </div>
+
+ </body>
+</html>
+<!--
+-->
